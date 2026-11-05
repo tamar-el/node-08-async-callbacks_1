@@ -12,5 +12,9 @@
 // Run: node ex09.js
 
 const os = require("os");
+const cpuModel=os.cpus();
+cpuModel.forEach(model=>{
+    console.log(`CPU ${cpuModel.indexOf(model)}: ${model.model}`);
+})
 
 // write your code here
