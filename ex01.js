@@ -11,9 +11,29 @@
 //
 // Run: node ex01.js
 
+// רמזים: קוראות עם "utf8" כדי לקבל טקסט ולא Buffer. הגודל נמצא ב-stats.size ותאריך היצירה ב-stats.birthtime (מדפיסים עם .toISOString()). את fs.stat קוראים בתוך ה-callback של fs.readFile.
 const fs = require("fs");
 const path = require("path");
 
 const filePath = path.join(__dirname, "sample.txt");
+fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+        console.error("Error reading file:", err);
+        return;
+    }
+    else {
+        console.log("File Content:");
+        console.log(data);
+        fs.stat(filePath, (err, stats) => {
+            if (err) {
+                console.error("Error getting file stats:", err);
+                return;
+            }
+            console.log(`\nSize: ${stats.size} bytes`);
+            console.log(`Created At: ${stats.birthtime.toISOString()}`);
+        });
 
+    }
+
+});
 // write your code here
