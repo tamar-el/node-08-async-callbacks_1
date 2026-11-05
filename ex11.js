@@ -11,9 +11,43 @@
 //
 // Run: node ex11.js
 
+
 const fs = require("fs");
 const path = require("path");
 
 const directoryPath = path.join(__dirname, "data-folder");
+
+fs.readdir(directoryPath, (err, items) => {
+    if (err) {
+        return console.log(err.message);
+    }
+
+    let totalSize = 0;
+    let checkedFiles = 0;
+
+    if (items.length === 0) {
+        console.log("Total size: 0 bytes");
+        return;
+    }
+
+    items.forEach((item) => {
+        const filePath = path.join(directoryPath, item);
+
+        fs.lstat(filePath, (err, stats) => {
+            if (err) {
+                console.log(err.message);
+            } else if (stats.isFile()) {
+                totalSize += stats.size;
+            }
+
+            checkedFiles++;
+
+            if (checkedFiles === items.length) {
+                console.log(`Total size: ${totalSize} bytes`);
+            }
+        });
+    });
+});
+
 
 // write your code here
