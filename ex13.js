@@ -10,5 +10,15 @@
 // Run: node ex13.js
 
 const os = require("os");
+function main(callback) {
+  const uptime = os.uptime();
+  callback(null, uptime);
+}
 
-// write your code here
+main((err, uptime) => {
+  if (err) {
+    console.error("Error getting system uptime:", err);
+  } else {
+    console.log(`System uptime: ${uptime} seconds`);
+  }
+});
